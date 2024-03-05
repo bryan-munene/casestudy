@@ -13,11 +13,11 @@ deploymentStrategy:
 
 resources:
   limits:
-    cpu: 200m
-    memory: 256Mi
+    cpu: 1m
+    memory: 64Mi
   requests:
-    cpu: 100m
-    memory: 128Mi
+    cpu: 1m
+    memory: 64Mi
 
 podAntiAffinity:
   enabled: true
