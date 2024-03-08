@@ -33,7 +33,7 @@ The [values file](./helm/values.yaml) allows you to pass in different configurat
 5. [AWS CLI](https://aws.amazon.com/cli/): Install the [client](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
 6. [Metric server](https://github.com/kubernetes-sigs/metrics-server?tab=readme-ov-file#installation): This will need to be installed for HPA to work.
 
-### [Terraform](./terraform/)
+### [terraform](./terraform/)
 
 To execute terraform, first need to prepare the environment.
 
@@ -61,7 +61,17 @@ terraform apply
 
 Once this is done you will need to [update you kubernetes context file](https://docs.aws.amazon.com/eks/latest/userguide/create-kubeconfig.html) with the info for the cluster. Necessary for next step to work.
 
-### [Helm](./terraform/)
+### [Metric server](https://github.com/kubernetes-sigs/metrics-server?tab=readme-ov-file#installation)
+  
+  This is necessary for HPA to function. HPA uses the resource metrics produced by metric server to determine if to scale.
+  Installed via official helm chart.
+
+```bash
+helm repo add metrics-server https://kubernetes-sigs.github.io/metrics-server/
+helm upgrade --install metrics-server metrics-server/metrics-server --create-namespace --namespace metrics-server
+```
+
+### [helm](./helm/)
 
 Once you have the correct kubernetes context set, to deploy the helm chart run:
 
