@@ -13,10 +13,10 @@ deploymentStrategy:
 
 resources:
   limits:
-    cpu: 1m
+    cpu: 10m
     memory: 64Mi
   requests:
-    cpu: 1m
+    cpu: 10m
     memory: 64Mi
 
 podAntiAffinity:
@@ -32,24 +32,24 @@ service:
 horizontalPodAutoscaling:
   enabled: true
   maxReplicas: 4 # [Required to be greater than .Values.replicas when enabled]
-  targetCPUUtilizationPercentage: 5 # [Optional] Triggers the horizontal pod autoscaling based on the percentage of pods CPU Requests utilized.
-  behavior: {} # Optional to customize the scale up and scale down behavior,  https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior
-    # scaleDown:
-    #   stabilizationWindowSeconds: 300
-    #   policies:
-    #   - type: Pods
-    #     value: 1
-    #     periodSeconds: 180
-    # scaleUp:
-    #   stabilizationWindowSeconds: 300
-    #   policies:
-    #   - type: Pods
-    #     value: 2
-    #     periodSeconds: 60
+  targetCPUUtilizationPercentage: 9 # [Optional] Triggers the horizontal pod autoscaling based on the percentage of pods CPU Requests utilized.
+  behavior: # {} # Optional to customize the scale up and scale down behavior,  https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#configurable-scaling-behavior
+    scaleDown:
+      stabilizationWindowSeconds: 0
+      policies:
+      - type: Pods
+        value: 2
+        periodSeconds: 15
+    scaleUp:
+      stabilizationWindowSeconds: 0
+      policies:
+      - type: Pods
+        value: 2
+        periodSeconds: 15
 
 podDisruptionBudget:
   enabled: true
   # You can specify only one of maxUnavailable and minAvailable in a single PodDisruptionBudget. 
   # maxUnavailable can only be used to control the eviction of pods that have an associated controller managing them.
-  minAvailable: 2 # Number of pods from that set that must still be available after the eviction, even in the absence of the evicted pod. minAvailable can be either an absolute number or a percentage.
+  minAvailable:  # Number of pods from that set that must still be available after the eviction, even in the absence of the evicted pod. minAvailable can be either an absolute number or a percentage.
   maxUnavailable: 1 # Number of pods from that set that can be unavailable after the eviction. It can be either an absolute number or a percentage.

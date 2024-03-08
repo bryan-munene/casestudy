@@ -27,6 +27,10 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sleep", "10"]
           livenessProbe:
             httpGet:
               path: /
